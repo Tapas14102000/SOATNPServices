@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="Student/base::layout(~{::section})">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta charset="ISO-8859-1">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 mt-4">
+
+			<div th:if="${session.message}" class="container mt-3">
+				<div th:classappend="${'alert-'+session.message.type}"
+					class="alert text-center" role="alert"
+					th:text="${session.message.content}"></div>
+				<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+			</div>
+			<div th:unless="${session.key}" class="container mt-3 text-center">
+				<p class="bg-danger text-white">Invalid Secret Key - Data can't
+					be Decrypted</p>
+			</div>
+			<div class="card-body" th:if="${totalPages != 0}">
+				<h1 class="text-center">Your Placements</h1>
+
+				<!-- <div class="search-container my-4">
+					<input id="search-input" onkeyup="search()" type="text"
+						class="form-control" placeholder="Search your contacts...">
+					<div class="search-result"></div>
+				</div> -->
+
+
+				<div class="table-responsive">
+					<table class="table table-hover table-responsive">
+						<thead>
+							<tr>
+								<th scope="col" class="text-center">Company</th>
+								<th scope="col" class="text-center">Message from TNP</th>
+								<th scope="col" class="text-center">Posted</th>
+								<th scope="col" class="text-center">Download</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c : ${placements}">
+								<td class="text-center" th:text="${c.company}">
+								<td class="text-center" th:text="${c.message}">
+								<td class="text-center" th:text="${c.time}"></td>
+								<td class="text-center">
+									<form th:action="@{'/download/'+${c.docfile}}"
+										method="post">
+										<button type="submit" class="btn btn-outline-primary btn-sm">
+											<i class="fa fa-download"></i>
+										</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- pagination -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" th:if="${totalPages>=1}">
+							<li th:if="${currentPage > 0}" class="page-item"><a
+								class="page-link" href="#"
+								th:href="@{'/student/placementlist/'+${currentPage-1}}"
+								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li th:if="${currentPage<totalPages}" class="page-item"
+								th:each="i : ${#numbers.sequence(1,totalPages)}"
+								th:classappend="${currentPage == i-1 ? 'active':''}"><a
+								th:href="@{'/student/placementlist/'+${i-1}}" class="page-link"
+								href="#"><span th:text="${i}"></span></a></li>
+							<li th:if="${currentPage+1 < totalPages}" class="page-item">
+								<a class="page-link"
+								th:href="@{'/student/placementlist/'+${currentPage+1}}" href="#"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+							</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="container text-center mt-5 mb-5"
+				th:if="${totalPages == 0}">
+				<h1 class="text-danger">No Placement Added !</h1>
+			</div>
+
+		</div>
+		<script>
+$(document).ready(()=>{
+	$(".item").removeClass("active1");
+	$("#contact-link").addClass("active1");
+});
+</script>
+	</section>
+</body>
+</html>

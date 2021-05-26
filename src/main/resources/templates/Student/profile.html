@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="Student/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<section>
+		<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		<div class="container my-2">
+			<div class="card ">
+				<div class="card-body text-center">
+					<div th:if="${session.key}">
+						<!-- <form th:action="@{/user/update-contact-user}" method="get" class="mt-2" style="padding-left: 95%;">
+			      	<button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-edit"></i></button>
+			      	</form> -->
+					</div>
+					<div th:unless="${session.key}">
+						<p class="bg-danger text-white">Invalid Secret Key - Data
+							can't be Decrypted</p>
+					</div>
+					<!-- <div th:if="${user.imageUrl}!='contact.png'">
+						<img alt="profile photo" src="#" class="profile_picture"
+							th:src="@{'/img/'+${user.id}+${user.imageUrl}}">
+					</div>
+					<div th:if="${user.imageUrl}=='contact.png'">
+						<img alt="profile photo" src="#" class="profile_picture"
+							th:src="@{'/img/'+${user.imageUrl}}">
+					</div> -->
+					
+					<div>
+						<img alt="profile photo" src="#" class="profile_picture"
+							th:src="@{/img/contact.png}">
+					</div> 
+
+					<table class="table table-hover table-xl mt-2">
+						<tbody>
+							<tr>
+								<th scope="row">Registration Number</th>
+								<td th:text="${student.Regd}"></td>
+							</tr>
+
+							<tr>
+								<th scope="row">Name</th>
+								<td th:text="${student.FirstName}+' '+${student.LastName}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Contact Number</th>
+								<td th:text="${student.Contact}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Email</th>
+								<td th:text="${student.Email}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Semester</th>
+								<td th:text="${student.Semester}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Branch</th>
+								<td th:text="${student.branch}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Graduation Year</th>
+								<td th:text="${student.year}"></td>
+							</tr>
+							<tr>
+								<th scope="row">10th Mark</th>
+								<td th:text="${student.s}"></td>
+							</tr>
+							<tr>
+								<th scope="row">12th Mark</th>
+								<td th:text="${student.Hs}"></td>
+							</tr>
+							<tr>
+								<th scope="row">CGPA Scored till now</th>
+								<td th:text="${student.CGPA}"></td>
+							</tr>
+
+							<tr>
+								<th scope="row">Placed</th>
+								<td th:if="${student.placed==true}"><span><i
+										class="far fa-check-circle text-success"></i> Hurray! You are placed</span></td>
+								<td th:if="${student.placed==false}"><span><i
+										class="far fa-times-circle text-danger"></i> Soon to be Placed...</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<script>
+$(document).ready(()=>{
+	$(".item").removeClass("active1");
+	$("#profile-link").addClass("active1");
+});
+</script>
+	</section>
+</body>
+</html>

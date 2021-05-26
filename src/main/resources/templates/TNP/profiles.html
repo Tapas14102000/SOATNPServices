@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="TNP/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<section>
+		<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+		<div class="container my-4">
+			<div class="card ">
+				<div class="card-body text-center">
+					<div th:if="${session.key}">
+						<!-- <form th:action="@{/user/update-contact-user}" method="get" class="mt-2" style="padding-left: 95%;">
+			      	<button type="submit" class="btn btn-outline-success btn-sm"><i class="fas fa-edit"></i></button>
+			      	</form> -->
+					</div>
+					<div th:unless="${session.key}">
+						<p class="bg-danger text-white">Invalid Secret Key - Data
+							can't be Decrypted</p>
+					</div>
+					<!-- <div th:if="${user.imageUrl}!='contact.png'">
+						<img alt="profile photo" src="#" class="profile_picture"
+							th:src="@{'/img/'+${user.id}+${user.imageUrl}}">
+					</div>
+					<div th:if="${user.imageUrl}=='contact.png'">
+						<img alt="profile photo" src="#" class="profile_picture"
+							th:src="@{'/img/'+${user.imageUrl}}">
+					</div> -->
+					
+					<div>
+						<img alt="profile photo" src="#" class="profile_picture"
+							th:src="@{/img/contact.png}">
+					</div> 
+
+					<table class="table table-hover table-xl mt-4">
+						<tbody>
+							<tr>
+								<th scope="row">Name</th>
+								<td th:text="${student.FirstName}+' '+${student.LastName}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Account created</th>
+								<td th:text="${student.year}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Contact Number</th>
+								<td th:text="${student.Contact}"></td>
+							</tr>
+							<tr>
+								<th scope="row">Email</th>
+								<td th:text="${student.Email}"></td>
+							</tr>
+							<tr>
+								<th scope="row">ROLE</th>
+								<td><i class="far fa-check-circle text-success"> ADMIN</i></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<script>
+$(document).ready(()=>{
+	$(".item").removeClass("active1");
+	$("#profile-link").addClass("active1");
+});
+</script>
+	</section>
+</body>
+</html>

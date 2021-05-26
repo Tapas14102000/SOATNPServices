@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf,org"
+	th:replace="Home/base::layout(~{::section})">
+<head>
+<meta charset="ISO-8859-1">
+<title th:text=${title}>Insert title here</title>
+<link rel="stylesheet" th:href="@{/CSS/style.css}">
+</head>
+<body>
+	<section>
+		<div class="container mt-2 mb-2">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="my-card mt-2">
+						<div th:if="${session.message}"
+							th:classappend="${session.message.type}" class="alert my-1"
+							role="alert">
+							<p class="text-center" th:text="${session.message.content}">
+								<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+						</div>
+						<div class="container text-center">
+							<img style="width: 150px; height: 150px;"
+								th:src="@{/img/contact.png}">
+						</div>
+						<h1 class="text-center text-dark">Register</h1>
+						<form action="" th:action="@{/do_register}" method="post"
+							style="padding-left: 20px; padding-right: 20px;"
+							th:object="${student}">
+							<!--First Name field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">First Name</label> <input
+									type="text" name="FirstName" class="form-control"
+									th:classappend="${#fields.hasErrors('FirstName')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{FirstName}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('FirstName')}" th:text="${e}"></div>
+							</div>
+							<!--Last Name field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">Last Name</label> <input
+									type="text" name="LastName" class="form-control"
+									th:classappend="${#fields.hasErrors('LastName')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{LastName}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('LastName')}" th:text="${e}"></div>
+							</div>
+							<!--Regd number field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">Registration
+									Number</label> <input type="text" name="Regd" class="form-control"
+									th:classappend="${#fields.hasErrors('Regd')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{Regd}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('Regd')}" th:text="${e}"></div>
+							</div>
+							<!--email field  -->
+							<div class="form-group">
+								<label for="email_field" class="form-label">Your Email</label> <input
+									type="email" name="Email" class="form-control"
+									th:classappend="${#fields.hasErrors('Email')? 'is-invalid' : ''}"
+									id="email_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{Email}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('Email')}" th:text="${e}"></div>
+							</div>
+							<!--Contact number field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">Contact
+									Number</label> <input type="text" name="Contact" class="form-control"
+									th:classappend="${#fields.hasErrors('Contact')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{Contact}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('Contact')}" th:text="${e}"></div>
+							</div>
+							<!--Semester field  -->
+							<div class="form-group my-3">
+								<label for="exampleFormControlSelect1" class="form-label">Current
+									Semester</label> <select th:field="*{Semester}" class="form-control"
+									id="exampleFormControlSelect1"
+									th:classappend="${#fields.hasErrors('Semester')? 'is-invalid' : ''}">
+									<option th:each="p : ${semesterlist}" th:value="${p}"
+										th:text="${p}" />
+								</select>
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('Semester')}" th:text="${e}"></div>
+							</div>
+							<!--Branch field  -->
+							<div class="form-group my-3">
+								<label for="exampleFormControlSelect1" class="form-label">Branch
+									</label> <select th:field="*{branch}" class="form-control"
+									id="exampleFormControlSelect1"
+									th:classappend="${#fields.hasErrors('branch')? 'is-invalid' : ''}">
+									<option th:each="p : ${branchlist}" th:value="${p}"
+										th:text="${p}" />
+								</select>
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('branch')}" th:text="${e}"></div>
+							</div>
+							<!--10th field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">Matriculation
+									%</label> <input type="number" step="any" name="s" class="form-control"
+									th:classappend="${#fields.hasErrors('s')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{s}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('s')}" th:text="${e}"></div>
+							</div>
+							<!--12th field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">Higher
+									Secondary %</label> <input type="number" step="any" name="Hs"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('Hs')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{Hs}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('Hs')}" th:text="${e}"></div>
+							</div>
+							<!--Btech CGPA field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">BTECH : CGPA
+									%</label> <input type="number" name="CGPA" step="any"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('CGPA')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{CGPA}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('CGPA')}" th:text="${e}"></div>
+							</div>
+							<!--Graduating Year field  -->
+							<div class="form-group">
+								<label for="name_field" class="form-label">Graduating
+									Year </label> <input type="text" name="year" class="form-control"
+									th:classappend="${#fields.hasErrors('year')? 'is-invalid' : ''}"
+									id="name_field" aria-describedby="emailHelp"
+									placeholder="Enter here" th:value="*{year}">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('year')}" th:text="${e}"></div>
+							</div>
+							<!--password field  -->
+							<div class="form-group">
+								<label for="password_field" class="form-label">Your
+									Password</label> <input type="password" name="password"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('password')? 'is-invalid' : ''}"
+									id="password_field" aria-describedby="emailHelp"
+									placeholder="Enter here">
+								<div class="invalid-feedback"
+									th:each="e : ${#fields.errors('password')}" th:text="${e}"></div>
+							</div>
+
+							<!-- Secret key  -->
+							<div class="form-group">
+								<label for="key_field" class="form-label">Secret key :
+									Remember this to decrypt your data</label> <input name="key"
+									id="key_field" type="password" class="form-control"
+									placeholder="Enter key here ">
+							</div>
+							<div class="container text-center mt-3">
+								<button class="btn btn-outline-primary" type="submit"
+									style="padding-left: 10px; padding-right: 10px; margin-bottom: 10px;">Register</button>
+							</div>
+							<div class="text-center">
+								<p class="text-muted">Already a member?</p>
+								<a class="btn btn-outline-primary" th:href="@{/signin}"
+									id="register">Sign In</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

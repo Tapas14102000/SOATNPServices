@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="TNP/base::layout(~{::section})">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+	integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+	crossorigin="anonymous" />
+<meta charset="ISO-8859-1">
+<title th:text="${title}">Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="card mr-3 mt-4">
+
+			<div th:if="${session.message}" class="container mt-3">
+				<div th:classappend="${'alert-'+session.message.type}"
+					class="alert text-center" role="alert"
+					th:text="${session.message.content}"></div>
+				<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+			</div>
+			<div th:unless="${session.key}" class="container mt-3 text-center">
+				<p class="bg-danger text-white">Invalid Secret Key - Data can't
+					be Decrypted</p>
+			</div>
+			<div class="card-body" th:if="${totalPages != 0}">
+			<h1 class="text-center">All Students</h1> 
+				<div class="search-container my-4 ">
+					<input onkeyup="search()" type="text" class="form-control"
+						placeholder="Enter registration number of the student you want to search" id="search-input">
+					<div class="search-result" style="display: none;position: absolute;z-index: 100;"></div>
+				</div>
+				<div class="container">
+				<p class="p-2">
+					Placed candidates : <a class=" btn btn-outline-success" th:href="@{/admin/Placedstudentlist/0}"><span th:text="${placedc}+' / '+${total}"></span> <i class="fas fa-smile"></i></a>
+					Unplaced candidates : <a class=" btn btn-outline-danger" th:href="@{/admin/NotPlacedstudentlist/0}"><span th:text="${total}-${placedc}+' / '+${total}"></span> <i class="fas fa-frown"></i></a>
+				</p>	 
+				</div>
+				<div class="table-responsive">
+					<table class="table table-hover table-responsive">
+						<thead>
+							<tr>
+								<th scope="col" class="text-center">Regd. NO.</th>
+								<th scope="col" class="text-center">Email</th>
+								<th scope="col" class="text-center">Branch</th>
+								<th scope="col" class="text-center">10th score</th>
+								<th scope="col" class="text-center">12th score</th>
+								<th scope="col" class="text-center">CGPA score</th>
+								<th scope="col" class="text-center">Placed</th>
+								<th scope="col" class="text-center">Placement</th>
+								<th scope="col" class="text-center">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="c : ${students}">
+								<td class="text-center" th:text="${c.Regd}">
+								<td class="text-center" th:text="${c.Email}">
+								<td class="text-center" th:text="${c.branch}">
+								<td class="text-center" th:text="${c.s}">
+								<td class="text-center" th:text="${c.Hs}">
+								<td class="text-center" th:text="${c.CGPA}">
+								<td class="text-center" th:if="${c.placed==true}">
+									<a th:href="@{'/admin/toggleplaced/'+${c.Regd}}" class="btn btn-outline-success btn-sm">
+											<i class="far fa-check-circle"></i>
+									</a>
+								</td>
+								<td class="text-center" th:if="${c.placed==false}">
+									<a th:href="@{'/admin/toggleplaced/'+${c.Regd}}" class="btn btn-outline-danger btn-sm">
+											<i class="far fa-times-circle"></i>
+									</a>
+								</td>
+								
+								<td class="text-center">
+								<a th:href="@{'/admin/placementlist/'+${c.Regd}+'/0'}" class="btn btn-outline-primary btn-sm">
+											<i class="fa fa-eye" aria-hidden="true"></i>
+									</a>
+								</td>
+								<td class="text-center">
+								<a th:href="@{'/admin/deletestudent/'+${c.Regd}}" class="btn btn-outline-danger btn-sm">
+											<i class="far fa-trash-alt"></i>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<!-- pagination -->
+					<nav aria-label="Page navigation example">
+						<ul class="pagination" th:if="${totalPages>=1}">
+							<li th:if="${currentPage > 0}" class="page-item"><a
+								class="page-link" href="#"
+								th:href="@{'/admin/studentlist/'+${currentPage-1}}"
+								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li th:if="${currentPage<totalPages}" class="page-item"
+								th:each="i : ${#numbers.sequence(1,totalPages)}"
+								th:classappend="${currentPage == i-1 ? 'active':''}"><a
+								th:href="@{'/admin/studentlist/'+${i-1}}" class="page-link"
+								href="#"><span th:text="${i}"></span></a></li>
+							<li th:if="${currentPage+1 < totalPages}" class="page-item">
+								<a class="page-link"
+								th:href="@{'/admin/studentlist/'+${currentPage+1}}" href="#"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+							</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+			<div class="container text-center mt-5 mb-5"
+				th:if="${totalPages == 0}">
+				<h1 class="text-danger">No one found here !</h1>
+			</div>
+
+		</div>
+		<script>
+$(document).ready(()=>{
+	$(".item").removeClass("active1");
+	$("#student-link").addClass("active1");
+});
+
+function visibility(){
+	console.log("working toggle");
+}
+</script>
+	</section>
+</body>
+</html>
